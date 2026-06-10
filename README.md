@@ -1,50 +1,100 @@
-# Welcome to your Expo app 👋
+# VVastra Amerta - Aplikasi Mobile Laundry
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  <img src="https://img.shields.io/badge/React_Native-0.81-61DAFB?logo=react&logoColor=black" alt="React Native">
+  <img src="https://img.shields.io/badge/Expo-54-000000?logo=expo&logoColor=white" alt="Expo">
+  <img src="https://img.shields.io/badge/Tailwind_CSS-NativeWind-38B2AC?logo=tailwind-css&logoColor=white" alt="NativeWind">
+</p>
 
-## Get started
+Aplikasi mobile **VVastra Amerta** adalah aplikasi klien berbasis **React Native** dan **Expo** yang digunakan oleh pelanggan laundry untuk memantau status cucian mereka secara real-time, melihat riwayat transaksi, menerima notifikasi, serta mengelola data profil mereka. Aplikasi ini berkomunikasi dengan Laravel Backend sebagai penyedia API.
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 🚀 Fitur Utama
 
-2. Start the app
+*   **Splash & Welcome Screen:** Tampilan awal interaktif sebelum masuk ke aplikasi utama.
+*   **Sistem Login & Autentikasi:** Menggunakan token berbasis **Laravel Sanctum** yang disimpan secara lokal menggunakan **AsyncStorage**.
+*   **Dashboard Interaktif:** Menampilkan status cucian yang sedang diproses secara visual, ringkasan transaksi, serta akses cepat ke daftar layanan.
+*   **Pelacakan Riwayat Transaksi:** Riwayat lengkap cucian pelanggan lengkap dengan status pembayaran dan rincian item.
+*   **Detail Transaksi Lengkap:** Halaman detail untuk melihat rincian cucian per transaksi beserta alur riwayat status pengerjaannya (*Status History*).
+*   **Pusat Notifikasi:** Menerima pemberitahuan langsung ketika status pengerjaan laundry berubah, lengkap dengan fitur untuk menandai notifikasi sebagai dibaca.
+*   **Manajemen Profil:** Halaman untuk mengubah nama, email, dan nomor telepon pelanggan yang langsung tersinkronisasi ke server.
+*   **Desain Premium & Animasi Halus:** Menggunakan **NativeWind** untuk penataan gaya visual modern serta **Moti** & **React Native Reanimated** untuk animasi transisi yang memukau.
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🛠️ Spesifikasi Teknologi
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+*   **Framework Utama:** React Native (0.81.x) dengan Expo SDK 54
+*   **Navigasi:** Expo Router v6 (Navigasi berbasis struktur folder/berkas)
+*   **Styling:** NativeWind (Integrasi Tailwind CSS pada React Native)
+*   **HTTP Client:** Axios (untuk pertukaran data API)
+*   **Penyimpanan Lokal:** `@react-native-async-storage/async-storage`
+*   **Library Animasi:** `moti`, `react-native-reanimated`, dan `react-native-skeleton-placeholder`
+*   **Library Icon:** `lucide-react-native` dan `@expo/vector-icons`
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## 📂 Struktur Berkas Penting (`/app`)
 
-When you're ready, run:
+Aplikasi ini menggunakan struktur navigasi berbasis berkas dari **Expo Router**:
 
+*   `app/_layout.tsx` - Root layout aplikasi untuk inisialisasi tema, toast provider, dan font.
+*   `app/(welcome)/`
+    *   `splash.tsx` - Halaman splash screen pembuka.
+    *   `login.tsx` - Halaman login pelanggan.
+*   `app/(tabs)/` - Halaman utama setelah login (menggunakan navigasi tab bawah):
+    *   `index.tsx` - Dashboard utama pelanggan.
+    *   `transaction.tsx` - Daftar riwayat transaksi laundry.
+    *   `profile.tsx` - Halaman profil & pengaturan akun pelanggan.
+*   `app/(transaction)/`
+    *   `show.tsx` - Detail lengkap dan riwayat status transaksi laundry tertentu.
+*   `app/(profile)/`
+    *   `edit.tsx` - Halaman untuk memperbarui informasi profil.
+    *   `notification.tsx` - Daftar notifikasi masuk bagi pelanggan.
+
+---
+
+## ⚙️ Cara Instalasi & Menjalankan Proyek
+
+Ikuti langkah-langkah di bawah ini untuk menjalankan aplikasi di lingkungan pengembangan lokal Anda:
+
+### 1. Prasyarat
+*   [Node.js (versi LTS direkomendasikan, >= 18)](https://nodejs.org/)
+*   Aplikasi **Expo Go** yang terpasang pada ponsel fisik Android/iOS Anda, ATAU **Android Studio Emulator** / **Xcode Simulator** di komputer Anda.
+
+### 2. Kloning dan Masuk ke Direktori
 ```bash
-npm run reset-project
+cd vvastraAmerta
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 3. Instal Dependensi Proyek
+```bash
+npm install
+```
 
-## Learn more
+### 4. Konfigurasi Alamat API Backend
+Aplikasi mobile perlu terhubung dengan server Laravel yang sedang berjalan di komputer Anda.
+1.  Buka berkas [apiClient.ts](file:///c:/Users/USER/vvastraAmerta/services/apiClient.ts).
+2.  Ubah konstanta `BASE_URL` sesuai dengan alamat IP komputer lokal Anda di jaringan lokal (Wi-Fi):
+    ```typescript
+    const BASE_URL = "http://<IP_KOMPUTER_ANDA>:8000/api";
+    ```
+    *   *Tips untuk Android Emulator:* Anda bisa menggunakan alamat IP bawaan emulator `http://10.0.2.2:8000/api`.
+    *   *Tips untuk HP Fisik (Expo Go):* Jalankan perintah `ipconfig` (Windows) di terminal untuk menemukan IPv4 Anda (misalnya `192.168.1.10`), lalu gunakan `http://192.168.1.10:8000/api`. Pastikan HP dan komputer terhubung pada Wi-Fi yang sama.
 
-To learn more about developing your project with Expo, look at the following resources:
+### 5. Jalankan Metro Bundler (Expo)
+Jalankan server pengembangan Expo dengan perintah:
+```bash
+npm run start
+```
+Atau jika ingin mereset cache Expo:
+```bash
+npx expo start -c
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 6. Hubungkan ke Emulator / Perangkat Fisik
+*   **Android (Fisik):** Buka aplikasi **Expo Go**, pilih opsi "Scan QR Code", lalu pindai kode QR yang tampil di terminal komputer Anda.
+*   **iOS (Fisik):** Buka aplikasi Kamera bawaan, pindai kode QR, lalu ketuk tautan untuk membuka di aplikasi **Expo Go**.
+*   **Android Emulator:** Jalankan emulator di Android Studio, lalu tekan tombol `a` pada terminal pengembangan Anda.
+*   **iOS Simulator:** Pastikan Simulator aktif, lalu tekan tombol `i` pada terminal pengembangan Anda.
