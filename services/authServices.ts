@@ -34,6 +34,10 @@ export const authService = {
     await AsyncStorage.removeItem("auth_user");
   },
 
+  async saveUser(user: User): Promise<void> {
+    await AsyncStorage.setItem("auth_user", JSON.stringify(user));
+  },
+
   /**
    * ngambil token
    * ngambil data user

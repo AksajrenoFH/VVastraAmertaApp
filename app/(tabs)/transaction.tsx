@@ -155,7 +155,7 @@ export default function TransactionScreen() {
 
   const paymentOptions = [
     { label: "Semua Bayar", value: "" },
-    { label: "Belum Lunas", value: "unpaid" },
+    { label: "Belum Lunas", value: "unpaid_partial" },
     { label: "Lunas", value: "paid" },
   ];
 

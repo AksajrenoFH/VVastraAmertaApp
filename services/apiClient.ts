@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
-const BASE_URL = "http://192.168.1.6:8000/api";
+const BASE_URL = "http://10.34.183.163:8000/api";
 
 // ngubah api jadi format json, dan kalo server gk respons selama 1.5 detik abakal dibatalin
 const apiClient = axios.create({

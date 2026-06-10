@@ -46,8 +46,19 @@ export default function ProfileScreen() {
 
   const loadUser = async () => {
     try {
-      const u = await authService.getUser();
-      setUser(u);
+      const localUser = await authService.getUser();
+      if (localUser) setUser(localUser);
+
+      const res = await apiClient.get("/profile");
+      if (res.data && res.data.success) {
+        const freshUser = res.data.user;
+
+        setUser(freshUser);
+
+        if (authService.saveUser) {
+          await authService.saveUser(freshUser);
+        }
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -57,6 +68,7 @@ export default function ProfileScreen() {
 
   useEffect(() => {
     loadUser();
+    checkUnreadNotif();
   }, []);
 
   useFocusEffect(
